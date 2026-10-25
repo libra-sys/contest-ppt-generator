@@ -1,0 +1,6 @@
+{
+  "provider": "YOUR_PROVIDER",
+  "base_url": "https://api.example.invalid/v1",
+  "api_key": "REPLACE_LOCALLY_DO_NOT_COMMIT",
+  "model": "YOUR_MODEL"
+}

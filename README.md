@@ -1,32 +1,39 @@
 # contest-ppt-generator
 
-A Codex/WorkBuddy skill for building evidence-based, editable PowerPoint presentations for career-planning and innovation/entrepreneurship competitions.
+**面向 Codex / WorkBuddy 的比赛演示稿制作 Skill。** 支持职业生涯规划大赛、创新创业比赛及其他项目路演/答辩场景，帮助从真实材料和大纲整理出风格统一、可继续编辑的 PowerPoint。
 
-## Workflow
+English: [README.en.md](README.en.md)
 
-1. Review source materials and constraints; distinguish verified facts from assumptions and ask about missing evidence.
-2. Build the narrative outline around the task and official competition requirements.
-3. Analyze the user's visual references separately, propose a coherent direction, and lock the style after approval.
-4. Create and review a representative visual, then the full slide visuals at the user's requested pace.
-5. After visual approval, recover original assets, isolate semantic elements, and rebuild ordinary copy/charts as native PowerPoint objects.
-6. Recompose slides from a manifest, verify placement, editability, embedded images, and rendered previews; deliver the PPTX and reusable assets.
+## 制作流程
 
-## Evidence rules
+1. **核对材料和约束**：区分有依据的事实、待确认信息和未来计划；不编造经历、奖项、数据或证书。
+2. **梳理表达主线**：结合比赛要求、受众和演讲时长整理内容大纲。
+3. **分析参考风格**：拆解版式、色彩、字体、材质和信息密度，综合成一套适合内容的设计方向。
+4. **先出视觉稿并确认**：制作封面或代表页，确认后锁定设计规则，再按用户指定节奏制作全稿。
+5. **逐页拆分并重组**：配合 `asset-slicer` 提取可复用视觉素材；普通文字和图表尽量重建为原生可编辑对象。
+6. **检查并交付**：按 manifest 重组 PPT，核对位置、层级、文字可编辑性、图片嵌入和渲染预览。
 
-Never invent personal experiences, awards, figures, certificates, or employment details. Prefer original evidence files over old resumes or notes. Preserve certificates and screenshots as source images; do not have image models redraw them. Label plans as plans and unsupported claims as pending verification.
+## 事实与素材原则
 
-## Visual decomposition
+- 证书、实习证明、成绩单和截图使用真实原件，不让生成模型重画证明材料。
+- 原始材料之间出现冲突时，回到原件核验；缺少依据的信息先标出并询问。
+- 计划写成计划，不写成已经完成的经历。
+- 项目可作为能力证明；演示主线应服务于比赛主题和目标，而非把材料堆成项目清单。
 
-The companion `asset-slicer` skill describes per-slide asset extraction. Its connected-component algorithm is a crop helper, not semantic segmentation. First identify and isolate objects such as panels, buttons, portraits, and illustrations; retain source images for evidence; make ordinary text editable; then recompose and check that moving an object does not reveal a duplicate underneath. See [the companion protocol](https://github.com/libra-sys/asset-slicer/blob/main/references/approved-slide-slicing.md).
+## 可编辑与素材拆分
 
-## Install
+演示稿不应只是整页图片：普通文字优先使用文本框，数据优先用可编辑图表，图片作为独立可替换对象。`asset-slicer` 的 `detect` 是连通区域裁切工具，不是语义识别；按钮、人物、面板等需要先确定对象边界并逐件隔离。拆分后还要原位重组，并检查移动对象时底图是否残留重影。
 
-Copy `SKILL.md`, `config.example.json`, and `references/` into your agent's skill directory as `contest-ppt-generator/`. If you have a local `asset-slicer` checkout, keep both skills side by side so relative references resolve. The linked public repository can also be used as a companion.
+## 安装与配套使用
 
-## Image generation configuration
+将 `SKILL.md`、`config.example.json` 和 `references/` 复制到 agent 的 `contest-ppt-generator/` 技能目录。与姊妹 Skill 并排安装时，可使用配套拆分协议：
 
-API configuration is optional. Built-in image-generation tools and local PPT assembly/slicing may not need an external API key. When using a provider API, verify current provider documentation and keep credentials only in local environment variables or ignored local files. Never commit `config.json` or paste keys into chat. The example config contains placeholders only.
+[asset-slicer](https://github.com/libra-sys/asset-slicer)
 
-## License
+## 图片生成 API 配置
 
-MIT. See [LICENSE](LICENSE).
+API 配置是可选的。内置图片生成能力、本地切图和 PPT 重组不一定需要外部 API key。若使用服务商 API，请按该服务商当前官方文档配置端点、模型与认证方式。密钥仅保存在本地环境变量或被 Git 忽略的本地配置文件中；不要贴进聊天或提交到仓库。仓库里的示例配置仅含占位值。
+
+## 许可
+
+MIT，详见 [LICENSE](LICENSE)。
